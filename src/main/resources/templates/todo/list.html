@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html" />
+    <title>Todo List</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script>
+        function deleteConfirm(id) {
+            if (confirm("Are you ok to delete?")) {
+                location.href = '/todo/delete/' + id;
+            }
+        }
+    </script>
+</head>
+<body>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Pic</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th colspan="2">Action</th>
+    </tr>
+    <tr th:each="todo : ${todos}">
+        <td th:text="${todo.id}"></td>
+        <td><img th:if="${todo.hasPic()}" th:src="@{'/todo/pic/' + ${todo.id}}" width="50" height="50"></td>
+        <td th:text="${todo.title}"></td>
+        <td th:text="${todo.statusStr}"></td>
+        <td th:text="${todo.dt}"></td>
+        <td><a th:href="@{'/todo/edit/' + ${todo.id}}">Edit</a></td>
+        <td><a href="#" th:onclick="deleteConfirm(/*[[${todo.id}]]*/);">Delete</a></td>
+    </tr>
+</table>
+<button onclick="location.href='/todo/new'">Create New</button>&nbsp;
+<button onclick="location.href='/logout'">Logout</button>
+</body>
+</html>

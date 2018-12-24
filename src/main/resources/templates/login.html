@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html" />
+    <title>Login</title>
+    <script src="/js/validate.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+
+<h2><img src="/img/springboot.png" width="50px" height="50px">Login</h2>
+
+<form id="loginForm" th:action="@{/login}" method="post">
+    <div th:if="${param.error}" class="red">ID or PW is incorrect.</div>
+    <p>ID <input type="text" name="username"/></p>
+    <p>PW <input type="password" name="password" /></p>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <button type="submit">Login</button>
+</form>
+
+</body>
+</html>
+

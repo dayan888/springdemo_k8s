@@ -1,0 +1,28 @@
+server:
+  tomcat:
+    maxHttpPostSize: -1
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demodb
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+    defaultAutoCommit: false
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+
+logging:
+  level:
+    ROOT: INFO
+
+app:
+  picDir: /opt/picDir
+  redis:
+    host: localhost
+    port: 6379

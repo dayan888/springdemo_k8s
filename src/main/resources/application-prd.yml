@@ -1,0 +1,26 @@
+server:
+  tomcat:
+    maxHttpPostSize: -1
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+  datasource:
+    url: ${DB_URL}
+    driverClassName: org.postgresql.Driver
+    defaultAutoCommit: false
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+
+logging:
+  level:
+    ROOT: INFO
+
+app:
+  picDir: ${PIC_DIR}
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
