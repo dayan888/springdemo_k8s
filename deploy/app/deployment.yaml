@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 
+    sbdemo-apserver
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sbdemo-apserver
+  template:
+    metadata:
+      labels:
+        app: sbdemo-apserver
+    spec:
+      containers:
+      - name: apserver
+        image: dayan888/springdemo:apserver
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: "prd"
+          - name: DB_URL
+            value: "jdbc:postgresql://sbdemo-postgres-service:5432/demodb?user=postgres&password=postgres"
+          - name: PIC_DIR
+            value: "/opt/picDir"
+          - name: REDIS_HOST
+            value: "sbdemo-redis-service"
+          - name: REDIS_PORT
+            value: "6379"     
+        volumeMounts:
+          - mountPath: "/opt/picDir"
+            name: apserver-pvc
+      volumes:
+      - name: apserver-pvc
+        persistentVolumeClaim:
+          claimName: sbdemo-apserver-pvc

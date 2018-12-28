@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sbdemo-redis-service
+spec:
+  type: ClusterIP
+  ports:
+   - name: "redis-port"
+     protocol: "TCP"
+     port: 6379
+     targetPort: 6379
+  selector:
+    app: sbdemo-redis

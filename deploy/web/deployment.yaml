@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sbdemo-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sbdemo-nginx
+  template:
+    metadata:
+      labels:
+        app: sbdemo-nginx
+    spec:
+      containers:
+      - name: nginx
+#        image: nginx:latest
+        image: dayan888/springdemo:nginx
+        ports:
+        - containerPort: 80
+#        command: [ "/bin/bash", "-ce", "tail -f /dev/null" ]
+        volumeMounts:
+        - name: nginx-conf
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+        - name: server-conf
+          mountPath: /etc/nginx/conf.d/server.conf
+          subPath: server.conf
+      volumes:
+      - name: nginx-conf
+        configMap: 
+          name: nginx-conf
+          items:
+            - key: nginx.conf
+              path: nginx.conf
+      - name: server-conf
+        configMap: 
+          name: server-conf
+          items:
+            - key: server.conf
+              path: server.conf

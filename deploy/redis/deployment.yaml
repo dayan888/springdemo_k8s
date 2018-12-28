@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sbdemo-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sbdemo-redis
+  template:
+    metadata:
+      labels:
+        app: sbdemo-redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:alpine
+        ports:
+        - containerPort: 6379
