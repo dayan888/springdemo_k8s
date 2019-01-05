@@ -21,7 +21,7 @@ spec:
           - containerPort: 5432
          volumeMounts:
          - name: pvc-db-volume
-           mountPath: /var/lib/postgresql/data
+           mountPath: /var/lib/postgresql
   volumeClaimTemplates:
   - metadata:
       name: pvc-db-volume

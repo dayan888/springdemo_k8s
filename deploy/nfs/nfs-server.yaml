@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sbdemo-nfs-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: nfs-server
+  template:
+    metadata:
+      labels:
+        role: nfs-server
+    spec:
+      containers:
+      - name: nfs-server
+        image: k8s.gcr.io/volume-nfs:0.8
+        ports:
+          - name: nfs
+            containerPort: 2049
+          - name: mountd
+            containerPort: 20048
+          - name: rpcbind
+            containerPort: 111
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /exports
+          name: sbdemo-nfs-server-pvc
+      volumes:
+        - name: sbdemo-nfs-server-pvc
+          persistentVolumeClaim:
+            claimName: sbdemo-nfs-server-pvc
+  

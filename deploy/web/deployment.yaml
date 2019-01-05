@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: sbdemo-nginx
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: sbdemo-nginx
@@ -18,7 +18,11 @@ spec:
         image: dayan888/springdemo:nginx
         ports:
         - containerPort: 80
-#        command: [ "/bin/bash", "-ce", "tail -f /dev/null" ]
+#        command: [ "/bin/bash" ]
+        readinessProbe:
+          httpGet:
+            path: /css/style.css
+            port: 80
         volumeMounts:
         - name: nginx-conf
           mountPath: /etc/nginx/nginx.conf
