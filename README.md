@@ -23,7 +23,7 @@
 
 * In production environment, I strongly recommend to use PaaS for DB and Redis.
 * The sample does not offer HA structure on DB and Redis. But the files of DB is not on container but on PV so that if DB is crashed for some reason, DB is automatically start up and data will not be lost unless problem occurs on the Volume.
-* Redis is used with on-memory mode, so if redis is crashed, session is lost. Users have to login again. But this may not be a fatal problem.
+* Redis is used with on-memory mode, so if redis is crashed, session is lost. Users have to login again. But this may not be a fatal problem. If you want to make it ha, consider using sentinel or redis by helm.
 * You can configure high availability for DB using streaming replication by yourself. Statefulset-0 is used for master node and greater than 0 are used for slave nodes (You also have to use pgpool for judging master or slave). While this configuration is valid for HA, if you want to use failover (one of slaves promote to master), the order of statefulset become meaningless. In this case, I believe the advantage of using k8s is less than expected. You should use PaaS or Virtual Machine rather than unstable container.
 * Along with DB, configuring shared Storage is another problem. We need to set up ReadWriteMany access for app pods. But standard Persistent Volume Claim may not support this mode. So we need set up manually nfs or glusterfs. If you want to store important data, you have to set up carefully. This example shows you to set up nfs.
   * see:  https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
@@ -45,9 +45,9 @@ Basically it is from standard spring boot project structure adding Docker and ku
 
 The following application must be installed if you want to run and develop the application locally.
 
-* JDK 8
+* JDK 8+
 * Docker
-* Postgres 9
+* Postgres 9+
 * Redis
 * IntelliJ (or other IDEs)
 
@@ -367,7 +367,7 @@ kubectl apply -f deploy/lb/nodeport.yaml
 kubectl apply -f deploy/lb/ingress.yaml
 ```
 
-After created, copy EXTERNAL IP of ingress and do the following command.
+After created, copy EXTERNAL IP of ingress and do the following command. It takes long time for EXTERNAL IP to be shown.
 
 ```
 curl -i https://{INGRESS_IP} -H "Host: sbdemo.example.com" --insecure
@@ -377,6 +377,7 @@ If you get 502 error, GCE's health check goes to / path that returns 302(Redirec
 
 See. https://github.com/kubernetes/ingress-gce/blob/master/README.md#health-checks
 
+This process also takes long time.
 If you want to test on browser, you should edit hosts file on your local machine.
 
 ```

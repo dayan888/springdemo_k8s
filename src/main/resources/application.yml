@@ -16,6 +16,12 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
+  session:
+    store-type: redis
+#    store-type: NONE
+  redis:
+    host: localhost
+    port: 6379
 
 logging:
   level:
@@ -23,6 +29,3 @@ logging:
 
 app:
   picDir: /opt/picDir
-  redis:
-    host: localhost
-    port: 6379
