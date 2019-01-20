@@ -11,5 +11,5 @@ spec:
   - ReadWriteMany
   nfs:
     # server ip must be changed
-    server: 10.11.241.143
+    server: {NFSIP}
     path: "/"

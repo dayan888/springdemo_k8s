@@ -11,7 +11,7 @@
 * DB and Session server are stateful. Especially data on DB server must be kept permanently. While session server does not need to be permanent but if the data are lost, it causes poor user experience that means that users must login again and if user enter something to save, it can be lost. But compared to DB, it is not so critical.
 * This demo uses single pod for both DB and Session server. If you want to use on production environment, I strongly suggest to use PaaS for both, at least for DB server.
 * The application sample is for managing ToDos. It consists in only three pages. Just offering function of security and crud of database table. 
-  * Login Page
+  * Login Page (ID/PW=admin/111111)
   * Todo List page
   * Todo Edit page
   * Todo contains uploaded images just for testing storage.
@@ -414,4 +414,34 @@ sbdemo-apserver-55f9d9d598-vkwjq apserver 2019-01-05 12:18:03.028  INFO 1 --- [n
 sbdemo-apserver-55f9d9d598-vkwjq apserver 2019-01-05 12:18:03.090  INFO 1 --- [nio-8080-exec-3] n.i.d.springdemo.common.LogInterceptor   : /todo/pic/1
 ```
 
+## Reset
 
+If you want to do from the beginning, execute the following.
+
+```
+kubectl delete secret --all
+kubectl delete configmap --all
+kubectl delete all --all
+```
+
+## Quick start
+
+You can use shell script to install quickly.
+
+### Prerequisite
+
+* kubectl
+* stern
+* open (You can also manually open browser and enter url.)
+
+### minikube or Docker for desktop
+
+```
+sh deploy/sh/local.sh
+```
+
+### GKE
+
+```
+sh deploy/sh/gke.sh
+```
