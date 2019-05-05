@@ -384,6 +384,9 @@ If you want to test on browser, you should edit hosts file on your local machine
 {INGRESS_IP}  sbdemo.example.com
 ```
 
+If your browser give you ERR_SSL_VERSION_OR_CIPHER_MISMATCH, it means registering ingress is not finished yet. You have to wait more. Because this is self sgined certificate, you have to permit access to the site on browser.
+ 
+
 To test balancing by path, create web server for test.
 
 ```
